@@ -1,55 +1,27 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
-import './App.css';
-import App from './App.jsx';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  Outlet,
-} from 'react-router-dom';
-import Appointments from './pages/Appointments/index.jsx';
-import Dashboard from './pages/Dashboard/index.jsx';
-import Doctors from './pages/Doctors/index.jsx';
-import Patients from './pages/Patients/index.jsx';
-import Schedules from './pages/Schedules/index.jsx';
+// src/main.jsx
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import App from "./App";
+import Doctors from "./pages/Doctors";
+import Schedules from "./pages/Schedules";
+import "./index.css";
 
-// Para proteger rotas que precisam de autenticação
-function PrivateRoute () {
+// Usaremos o backend real — removemos MSW/mocks.
+// Se quiser manter mocks no futuro, reative condicionalmente com uma env var.
+const container = document.getElementById("root");
+const root = createRoot(container);
 
-}
-
-function RootRouter(){
-  return (
+root.render(
+  <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path='/login' element={<login/>} />               {/* rota publica */}
-      
-        <Route element={<PrivateRoute/>}>
-          <Route path='*/' element={<App/>}>
-            <Route index element={<Dashboard/>} />
-            <Route path='dashboards' element={<Dashboard/>}/>
-            <Route path="doctors" element={<Doctors />} />
-            <Route path="patients" element={<Patients />} />
-            <Route path="schedules" element={<Schedules />} />
-            <Route path="appointments" element={<Appointments />} />
-
-          </Route>
+        <Route path="/*" element={<App />}>
+          <Route index element={<div>Home (placeholder)</div>} />
+          <Route path="doctors" element={<Doctors />} />
+          <Route path="schedules" element={<Schedules />} />
         </Route>
-      <Route path="*" element={<Navigate to="/" replace />} /> {/*Para qualquer rota aleatoria*/}
-
-    </Routes>
-  </BrowserRouter>
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
 );
-}
-
-// createRoot(document.getElementById('root')).render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>,
-// )
-
-const root = createRoot(document.getElementById('root'))
-root.render(<App/>); //depois trocar para RootRouter

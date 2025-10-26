@@ -1,0 +1,253 @@
+/* src/pages/Doctors/index.css */
+
+/* Variáveis e reset */
+:root{
+  --bg-900:#0f0f10;
+  --bg-800:#151515;
+  --card:#1f1f1f;
+  --muted:#aeb3b8;
+  --muted-2:#8f9396;
+  --accent:#0fb387;
+  --accent-2:#1aa98f;
+  --glass: rgba(255,255,255,0.03);
+  --surface: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  --radius:14px;
+  --shadow-lg: 0 12px 30px rgba(0,0,0,0.6);
+  --gap:20px;
+  --text:#f6f7f8;
+}
+
+/* Global */
+body {
+  margin: 0;
+  background: radial-gradient(1200px 900px at 10% 10%, rgba(15,15,15,0.7), transparent 8%),
+              linear-gradient(180deg,var(--bg-900), var(--bg-800));
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page wrapper - aumentado para permitir cards mais amplos */
+.doctors-root{
+  max-width: 1400px;   /* aumentado de 1200px para 1400px */
+  margin: 28px auto;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+/* Title */
+.doctors-root h1{
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
+  margin: 12px 0 28px;
+  letter-spacing: 10px;
+  color: var(--text);
+  text-shadow: 0 2px 0 rgba(0,0,0,0.6);
+}
+
+/* Layout: form full-width, search below (full-width) */
+.doctors-grid{
+  display: grid;
+  grid-template-columns: 1fr; /* uma coluna apenas: form acima, search abaixo */
+  gap: var(--gap);
+  align-items: start;
+}
+
+/* Card base - ampliado horizontalmente */
+.card, .generator-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 40px;               /* levemente maior padding para respirar */
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 1100px;           /* aumentado de 1000px para 1100px */
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Form header */
+.form-section h2 {
+  margin: 0 0 18px 0;
+  font-size: 22px;
+  color: var(--muted);
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Form layout: mantém dois campos por linha quando houver espaço */
+.form-grid{
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 20px;
+}
+.form-grid label{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--muted-2);
+  font-size: 18px;
+}
+
+/* Inputs & selects */
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select,
+input[type="tel"] {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text);
+  outline: none;
+  font-size: 16px;
+  transition: box-shadow .12s, border-color .12s, transform .06s;
+}
+input:focus, select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(11,179,142,0.08);
+  transform: translateY(-1px);
+}
+
+/* Actions: botões lado a lado, tamanhos padronizados */
+/* Aumentei o gap e a margem-top para deslocar os botões um pouco mais para baixo */
+.actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 30px;       /* aumento sutil do espaçamento entre botões */
+  margin-top: 54px; /* maior distância do bloco acima (campos) */
+}
+
+/* Botões padronizados: mesmo tamanho visual */
+.btn {
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  color: white;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  box-shadow: 0 10px 26px rgba(11,179,142,0.12);
+  min-width: 180px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn.ghost {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+}
+
+/* Força os botões a terem mesma largura em telas menores */
+.actions .btn {
+  flex: 1;                /* ambos ocupam mesmo espaço */
+  min-width: 180px;       /* tamanho mínimo padronizado */
+  text-align: center;
+}
+
+/* Ajuste visual do card de busca (agora abaixo do form) */
+.generator-card {
+  margin-top: 0;
+  padding-top: 18px;
+}
+.generator-card h3{
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: var(--muted);
+  text-align: center;
+  font-weight: 700;
+}
+
+/* Input na search card */
+.generator-card input[type="text"]{
+  width: 100%;
+}
+
+/* Mensagem de carregando */
+.generator-card .generator-note,
+.generator-card .loading-note {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+/* Preview count */
+.preview-count{ color: var(--muted-2); font-size: 13px; }
+
+/* Lista de médicos section */
+.section-title{
+  margin-top: 12px;
+  font-size: 22px;
+  text-align: center;
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* Doctors list */
+.doctors-list {
+  margin-top: 10px;
+}
+.doctors-list ul{ list-style:none; padding:0; margin:10px 0; display:flex; flex-direction:column; gap:12px; }
+.doctors-list li{
+  background: rgba(255,255,255,0.02);
+  padding: 12px 16px;
+  border-radius: 10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.doctors-list strong{ font-size: 17px; }
+
+/* Preview box (JSON) */
+.preview-box {
+  margin-top: 16px;
+  background: rgba(0,0,0,0.45);
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.03);
+  max-height: 320px;
+  overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 13px;
+  color: #dfe7e3;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.02);
+}
+
+/* Badges */
+.badge {
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:12px;
+}
+.badge.free{ background: rgba(15,179,135,0.10); color: #9ff0d8; border: 1px solid rgba(15,179,135,0.06); }
+.badge.busy{ background: rgba(255,165,0,0.06); color: #ffd7a8; border: 1px solid rgba(255,165,0,0.06); }
+.badge.booked{ background: rgba(59,130,246,0.06); color: #b8d7ff; border: 1px solid rgba(59,130,246,0.06); }
+
+/* Responsividade: em telas pequenas, a grid se mantém stackada e os campos viram uma coluna */
+@media (max-width: 1100px) {
+  .doctors-root { padding: 18px; max-width: 1200px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .actions { flex-wrap: wrap; gap:10px; }
+  .actions .btn { min-width: 140px; flex: 1; }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  .doctors-root h1 { font-size: 28px; }
+  .preview-box { font-size: 12px; max-height: 220px; }
+  .btn { padding: 10px 12px; min-width: 120px; border-radius: 10px; }
+  .form-grid { gap: 8px; }
+}
