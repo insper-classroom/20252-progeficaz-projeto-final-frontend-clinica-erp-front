@@ -1,0 +1,107 @@
+/* ajustes finos para layout do gerador */
+.generator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+/* garante label sobre input e alinhamento consistente */
+.generator-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* faz inputs ocuparem toda a célula e terem largura consistente */
+.generator-grid input[type="date"],
+.generator-grid input[type="time"],
+.generator-grid select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  color: var(--text);
+  font-size: 14px;
+}
+
+/* se quiser que inputs de time sejam um pouco mais compactos, controla via max-width */
+.generator-grid input[type="time"] {
+  max-width: 200px;
+}
+
+/* linha do intervalo e checkboxes: alinhadas e ocupando col-span apropriado */
+.interval-row {
+  display: flex;
+  flex-direction: center;
+  gap: 25px;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 14px;
+}
+
+/* coloca interval select junto das checkboxes, com espaçamento */
+.interval-row .interval-select {
+  min-width: 100px;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.interval-row label {
+  display: flex;
+  flex-direction: center;  /* coloca o texto acima da caixa */
+  gap: 12px;                /* distância entre o texto e o select */
+  color: var(--muted);
+  font-size: 14px;
+  align-items: center; /* garante alinhamento correto do texto */
+}
+
+/* caixas de check alinhadas verticalmente centradas */
+.interval-row .days-checkboxes {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* resumo acima dos botões */
+.generator-summary {
+  text-align: center;
+  color: var(--muted);
+  margin: 20px 20px;
+}
+
+/* ações: agora 3 botões em linha, centralizados e com espaçamento uniforme */
+.generator-actions {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* força mesmos tamanhos visuais */
+.generator-actions .btn {
+  padding: 14px 30px;
+  border-radius: 12px;
+  min-width: 200px;
+  font-weight: 700;
+}
+
+/* estilos primário / secundário */
+.generator-actions .btn.generate { background: linear-gradient(180deg, var(--accent), var(--accent-2)); color:#fff; box-shadow:0 10px 26px rgba(11,179,142,0.12); }
+.generator-actions .btn.save { background: linear-gradient(180deg, var(--accent), var(--accent-2)); color:#fff; box-shadow:0 10px 26px rgba(11,179,142,0.12); }
+.generator-actions .btn.clear { background: transparent; border:1px solid rgba(255,255,255,0.06); color:var(--text); }
+
+/* responsividade */
+@media (max-width: 900px) {
+  .generator-grid { grid-template-columns: repeat(2, 1fr); }
+  .generator-actions { flex-direction: column; gap: 12px; }
+  .generator-actions .btn { min-width: 100%; }
+}
