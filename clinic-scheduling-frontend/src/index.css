@@ -1,3 +1,7 @@
+html, :root, #root {
+  height: 100%;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -27,11 +31,10 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  height: 100%;
 
-  /* mantém flex se quiser, mas alinha ao topo/esquerda */
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  /* usar fluxo normal para páginas que esperam blocos a 100% */
+  display: block;
 }
 
 
