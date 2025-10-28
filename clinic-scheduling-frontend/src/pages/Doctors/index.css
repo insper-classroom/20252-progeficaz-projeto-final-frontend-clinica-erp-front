@@ -1,36 +1,9 @@
-/* src/pages/Doctors/index.css */
-
-/* Variáveis e reset */
-:root{
-  --bg-900:#0f0f10;
-  --bg-800:#151515;
-  --card:#1f1f1f;
-  --muted:#aeb3b8;
-  --muted-2:#8f9396;
-  --accent:#0fb387;
-  --accent-2:#1aa98f;
-  --glass: rgba(255,255,255,0.03);
-  --surface: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  --radius:14px;
-  --shadow-lg: 0 12px 30px rgba(0,0,0,0.6);
-  --gap:20px;
-  --text:#f6f7f8;
-}
-
-/* Global */
-body {
-  margin: 0;
-  background: radial-gradient(1200px 900px at 10% 10%, rgba(15,15,15,0.7), transparent 8%),
-              linear-gradient(180deg,var(--bg-900), var(--bg-800));
-  color: var(--text);
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* REMOVER: :root { ... } e body { ... } duplicados */
+/* --- Em vez disso, confiar nas variáveis definidas em src/index.css --- */
 
 /* Page wrapper - aumentado para permitir cards mais amplos */
 .doctors-root{
-  max-width: 1400px;   /* aumentado de 1200px para 1400px */
+  max-width: 1400px;
   margin: 28px auto;
   padding: 28px;
   box-sizing: border-box;
@@ -42,10 +15,12 @@ body {
   font-weight: 700;
   text-align: center;
   margin: 12px 0 28px;
-  letter-spacing: 10px;
+  letter-spacing: 2px; /* reduzido de 10px para 2px para padronizar */
   color: var(--text);
   text-shadow: 0 2px 0 rgba(0,0,0,0.6);
+  font-family: inherit;
 }
+
 
 /* Layout: form full-width, search below (full-width) */
 .doctors-grid{
@@ -218,7 +193,7 @@ input:focus, select:focus {
   border: 1px solid rgba(255,255,255,0.03);
   max-height: 320px;
   overflow: auto;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   font-size: 13px;
   color: #dfe7e3;
   box-shadow: inset 0 2px 0 rgba(255,255,255,0.02);

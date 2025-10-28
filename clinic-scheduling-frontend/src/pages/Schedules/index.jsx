@@ -72,16 +72,9 @@ export default function Schedules() {
         <select
           value={selectedDoctorId}
           onChange={(e) => setSelectedDoctorId(e.target.value)}
-          style={{
-            padding: "10px 12px",
-            borderRadius: 8,
-            width: 420,
-            maxWidth: "100%",
-            border: "1px solid rgba(255,255,255,0.04)",
-            background: "transparent",
-            color: "var(--text)",
-          }}
+          className="form-select"
         >
+
           <option value="">— selecione —</option>
           {doctors.map((d) => (
             <option key={d._id} value={d._id}>

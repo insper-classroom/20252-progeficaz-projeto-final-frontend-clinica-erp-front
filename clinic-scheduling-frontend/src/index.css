@@ -1,38 +1,33 @@
+/* src/index.css — adicionar/apontar variáveis globais (colocar dentro de :root) */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* tipografia / reset global */
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --bg-900: #0f0f10;
+  --bg-800: #151515;
+  --card: #1f1f1f;
+  --muted: #aeb3b8;
+  --muted-2: #8f9396;
+  --accent: #0fb387;
+  --accent-2: #1aa98f;
+  --glass: rgba(255,255,255,0.03);
+  --surface: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  --radius: 14px;
+  --shadow-lg: 0 12px 30px rgba(0,0,0,0.6);
+  --gap: 20px;
+  --text: #f6f7f8;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-
+/* garante que body use a fonte/cores do root (remover overrides conflitantes nas páginas) */
 body {
   margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-
-  /* mantém flex se quiser, mas alinha ao topo/esquerda */
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  background: radial-gradient(1200px 900px at 10% 10%, rgba(15,15,15,0.7), transparent 8%),
+              linear-gradient(180deg,var(--bg-900), var(--bg-800));
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: inherit;
 }
+
 
 
 h1 {
@@ -46,7 +41,7 @@ button {
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
-  font-family: inherit;
+  font-family: Arial;
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;

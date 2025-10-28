@@ -1,4 +1,23 @@
 /* ajustes finos para layout do gerador */
+/* Padronização de wrapper e título (igual ao Doctors) */
+.schedules-root{
+  max-width: 1400px;
+  margin: 28px auto;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+.schedules-root h1{
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
+  margin: 12px 0 18px;
+  letter-spacing: 2px;
+  color: var(--text);
+  font-family: inherit;
+}
+
+
 .generator-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -104,4 +123,85 @@
   .generator-grid { grid-template-columns: repeat(2, 1fr); }
   .generator-actions { flex-direction: column; gap: 12px; }
   .generator-actions .btn { min-width: 100%; }
+}
+/* Padronização visual dos cards (igual Doctors) */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 40px;
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+/* ===== padronização de selects e centralização - Schedules ===== */
+
+.form-select {
+  appearance: none;              /* remove aparência nativa para melhor controle */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: rgba(15,15,15,0.55); /* fundo escuro do dropdown */
+  color: var(--text) !important;
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 10px 14px;
+  border-radius: 10px;
+  min-width: 290px;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Força fundo das opções (quando o navegador respeitar) */
+.form-select option {
+  background: linear-gradient(180deg, var(--bg-800), rgba(0,0,0,0.6));
+  color: var(--text);
+}
+
+/* adiciona um ícone "seta" simulada (opcional visual) */
+.form-select {
+  background-image: linear-gradient(45deg, transparent 50%, var(--text) 50%),
+                    linear-gradient(135deg, var(--text) 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 12px) calc(1em + 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 42px; /* espaço para a "seta" */
+}
+
+/* centralizar label + select dentro do card (como em generator) */
+/* .schedules-root .card > label,
+.schedules-root .card > .label-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+} */
+
+/* garante que o container do select (quando não estiver em label) também fique centralizado */
+.schedules-root .card .form-select {
+  margin: 6px auto 0 auto;
+}
+
+/* mantém a aparência do intervalo existente, combinando com o form-select */
+.interval-select {
+  min-width: 100px;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+/* em telas pequenas, mantemos full-width mas centralizado */
+@media (max-width: 900px) {
+  .form-select { width: 100%; margin: 8px 0; }
+  .schedules-root .card > label { align-items: stretch; }
+}
+/* Centraliza o bloco Selecionar médico e o select dentro do card */
+.schedules-root .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }

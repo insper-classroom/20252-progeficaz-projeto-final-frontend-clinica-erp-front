@@ -79,7 +79,8 @@ export default function ScheduleGenerator({ onGenerate, onSaveClick }) {
         <div className="interval-row">
           <label>
             Intervalo (min)
-            <select {...register("intervalMinutes")} className="interval-select">
+            <select {...register("intervalMinutes")} className="interval-select form-select">
+
               <option value={15}>15</option>
               <option value={30}>30</option>
               <option value={60}>60</option>
