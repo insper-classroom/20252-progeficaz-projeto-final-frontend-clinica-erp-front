@@ -1,8 +1,9 @@
 import "./index.css"
-import { useState} from "react";
+import { useState } from "react";
 
 export default function LandingPage() {
   const [showRegistration, setShowRegistration] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   return (
     <div className="landing-container">
       {/* Header */}
@@ -12,7 +13,7 @@ export default function LandingPage() {
           <span>Dr. Bot</span>
         </div>
         <div className="header-buttons">
-          <button className="btn btn-secondary">Login</button>
+          <button className="btn btn-secondary" onClick={() => setShowLogin(true)}>Login</button>
           <button className="btn btn-primary" onClick={() => setShowRegistration(true)}>Criar Conta</button>
         </div>
       </header>
@@ -51,6 +52,7 @@ export default function LandingPage() {
       </section>
 
   {showRegistration && <RegistrationModal onClose={() => setShowRegistration(false)} />}
+  {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
     </div>
   )
 }
@@ -358,6 +360,107 @@ function RegistrationModal({ onClose }) {
             </div>
           </form>
         )}
+      </div>
+    </div>
+  )
+}
+
+function LoginModal({ onClose }) {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  })
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log("[v0] Login data:", formData)
+    // Handle login submission here
+    alert("Login successful!")
+    onClose()
+  }
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content login-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h2 className="modal-title">Faça seu login</h2>
+          <button className="modal-close" onClick={onClose}>
+            ✕
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="form-section">
+            <div className="form-group">
+              <label className="form-label required">Email da clínica</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="form-input"
+                placeholder="contato@clinica.com"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label required">Senha</label>
+              <div className="password-input-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="form-input"
+                  placeholder="Digite sua senha"
+                  required
+                />
+                <button type="button" className="password-toggle" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? "👁️" : "👁️‍🗨️"}
+                </button>
+              </div>
+            </div>
+
+            <div className="form-options">
+              <label className="checkbox-label">
+                <input type="checkbox" className="form-checkbox" />
+                <span>Lembrar minha senha </span>
+              </label>
+              <a href="#" className="forgot-password">
+                Esqueceu sua senha?
+              </a>
+            </div>
+          </div>
+
+          <div className="form-actions">
+            <button type="submit" className="btn btn-primary btn-full">
+              Login
+            </button>
+          </div>
+
+          <div className="form-footer">
+            <p className="footer-text">
+              Não tem uma conta?{" "}
+              <a
+                href="#"
+                className="footer-link"
+                onClick={(e) => {
+                  e.preventDefault()
+                  onClose()
+                }}
+              >
+                Criar Conta
+              </a>
+            </p>
+          </div>
+        </form>
       </div>
     </div>
   )

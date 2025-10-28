@@ -399,6 +399,102 @@
   flex: 1;
 }
 
+/* Added login modal specific styles */
+.login-modal {
+  max-width: 450px;
+}
+
+.login-form {
+  padding: 1.5rem 2rem 2rem;
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #a3a3a3;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1.25rem;
+  transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: #14b8a6;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #e5e5e5;
+  cursor: pointer;
+}
+
+.form-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #14b8a6;
+}
+
+.forgot-password {
+  font-size: 0.875rem;
+  color: #14b8a6;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.forgot-password:hover {
+  color: #0d9488;
+  text-decoration: underline;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.form-footer {
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid #1f1f1f;
+  margin-top: 1.5rem;
+}
+
+.footer-text {
+  font-size: 0.875rem;
+  color: #a3a3a3;
+  margin: 0;
+}
+
+.footer-link {
+  color: #14b8a6;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #0d9488;
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.5rem;
