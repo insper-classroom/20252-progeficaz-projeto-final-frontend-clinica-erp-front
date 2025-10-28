@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../api/axiosInstance";
 import ScheduleGenerator from "./ScheduleGenerator";
-import "./index.css"; // usa o css específico de Schedules
+import "./index.css"; 
 
 export default function Schedules() {
   const [doctors, setDoctors] = useState([]);
@@ -63,7 +63,7 @@ export default function Schedules() {
 
   return (
     <div className="schedules-root">
-      <h1>Schedules — gerar e vincular horários</h1>
+      <h1> Horários — gerar e vincular </h1>
 
       <div className="card" style={{ marginBottom: 18 }}>
         <label style={{ display: "block", marginBottom: 8, color: "var(--muted)" }}>

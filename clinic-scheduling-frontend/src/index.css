@@ -22,13 +22,18 @@ a:hover {
   color: #535bf2;
 }
 
+
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+
+  /* mantém flex se quiser, mas alinha ao topo/esquerda */
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
+
 
 h1 {
   font-size: 3.2em;

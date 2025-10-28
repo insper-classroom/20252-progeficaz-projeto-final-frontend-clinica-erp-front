@@ -70,7 +70,7 @@ export default function DoctorsPage() {
 
   return (
     <div className="doctors-root">
-      <h1>Doctors — cadastro e consultas</h1>
+      <h1>Médicos — cadastro e consultas</h1>
 
       <section className="doctors-grid">
         <div className="card form-section">

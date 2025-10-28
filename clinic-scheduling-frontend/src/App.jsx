@@ -1,32 +1,36 @@
 // src/App.jsx
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
 import "./App.css";
 
 export default function App() {
-  return (
-    <div className="app-root" style={{ display: "flex", minHeight: "100vh" }}>
-      {/* Placeholder: Sidebar/Topbar serão implementados por outro dev */}
-      <aside style={{ width: 240, background: "#f5f5f5", padding: 16 }}>
-        {/* TODO: substituir por Sidebar real */}
-        <strong>Sidebar (placeholder)</strong>
-        <nav>
-          <ul>
-            <li><a href="/">Dashboard</a></li>
-            <li><a href="/doctors">Doctors</a></li>
-            <li><a href="/schedules">Schedule</a></li>
-          </ul>
-        </nav>
-      </aside>
+  const [collapsed, setCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem("sidebar_collapsed") === "1";
+    } catch {
+      return false;
+    }
+  });
 
-      <main style={{ flex: 1, padding: 24 }}>
-        {/* TopBar placeholder */}
-        <header style={{ marginBottom: 16 }}>
+  const sidebarWidth = collapsed ? 92 : 300; // espaço total da sidebar + margem visual
+
+  return (
+    <div className="app-root">
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+
+      <main
+        className="app-main"
+        style={{
+          marginLeft: sidebarWidth,
+          transition: "margin-left .22s ease",
+        }}
+      >
+        <header className="app-topbar">
           <div>AppBar (placeholder)</div>
         </header>
 
-        {/* Aqui as páginas renderizam */}
-        <section>
+        <section className="app-content">
           <Outlet />
         </section>
       </main>
