@@ -205,3 +205,48 @@
   align-items: center;
   text-align: center;
 }
+/* lista formatada de horários */
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.schedule-day h4 {
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.schedule-day ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.slot {
+  background: rgba(255,255,255,0.03);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 120px;
+}
+
+.slot .status {
+  font-size: 12px;
+  color: var(--muted-2);
+}
+
+.slot.ocupado { border-color: rgba(255,100,100,0.4); }
+.slot.disponível { border-color: rgba(15,179,135,0.4); }
+.slot .paciente {
+  color: #9ff0d8;
+  font-size: 12px;
+}
