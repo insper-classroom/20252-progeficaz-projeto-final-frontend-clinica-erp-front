@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Doctors from "./pages/Doctors";
 import Schedules from "./pages/Schedules";
+import Patients from "./pages/Patients";
 import LandingPage from "./pages/LandingPage";
 import "./index.css";
 
@@ -25,6 +26,7 @@ root.render(
           <Route index element={<div>Home (placeholder)</div>} />
           <Route path="doctors" element={<Doctors />} />
           <Route path="schedules" element={<Schedules />} />
+          <Route path="patients" element={<Patients />} />
         </Route>
       </Routes>
     </BrowserRouter>
