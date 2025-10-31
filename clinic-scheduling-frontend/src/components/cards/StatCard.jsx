@@ -1,12 +1,12 @@
 // Component for displaying statistics cards
 import PropTypes from 'prop-types';
 
-export default function StatCard({ title, value, icon, iconColor, trend, trendValue }) {
+export default function StatCard({ title, value, icon, trend, trendValue }) {
   return (
     <div className="stat-card">
       <div className="stat-card-header">
-        <div className="stat-card-icon" style={{ backgroundColor: iconColor }}>
-          <i className={icon}></i>
+        <div className="stat-card-icon">
+          {icon}
         </div>
         <div className="stat-card-content">
           <h3 className="stat-card-value">{value}</h3>
@@ -25,12 +25,7 @@ export default function StatCard({ title, value, icon, iconColor, trend, trendVa
 StatCard.propTypes = {
   title: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  icon: PropTypes.string.isRequired,
-  iconColor: PropTypes.string,
+  icon: PropTypes.node.isRequired,
   trend: PropTypes.oneOf(['up', 'down']),
   trendValue: PropTypes.string,
-};
-
-StatCard.defaultProps = {
-  iconColor: '#4680FF',
 };
