@@ -19,6 +19,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            sudo su
             cd /home/ubuntu/20252-progeficaz-projeto-final-frontend-clinica-erp-front/clinic-scheduling-frontend
             git pull origin main
             npm install
