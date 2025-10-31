@@ -8,7 +8,7 @@ import { generateSlots } from "../../utils/generateSlots";
  *  - onGenerate(horariosObject)
  *  - onSaveClick(horariosObject)  // opcional: função que salva no backend
  */
-export default function ScheduleGenerator({ onGenerate, onSaveClick }) {
+export default function ScheduleGenerator({ onGenerate, onSaveClick, saveDisabled }) {
   const { register, handleSubmit, reset, watch } = useForm({
     defaultValues: {
       startDate: new Date().toISOString().slice(0, 10),
@@ -79,7 +79,8 @@ export default function ScheduleGenerator({ onGenerate, onSaveClick }) {
         <div className="interval-row">
           <label>
             Intervalo (min)
-            <select {...register("intervalMinutes")} className="interval-select">
+            <select {...register("intervalMinutes")} className="interval-select form-select">
+
               <option value={15}>15</option>
               <option value={30}>30</option>
               <option value={60}>60</option>
@@ -110,9 +111,13 @@ export default function ScheduleGenerator({ onGenerate, onSaveClick }) {
             className="btn save"
             onClick={handleSaveClickInternal}
             title="Salvar horários (usa callback onSaveClick do wrapper)"
+            disabled={!!saveDisabled}
+            aria-disabled={!!saveDisabled}
+            style={ saveDisabled ? { opacity: 0.6, cursor: "not-allowed" } : {} }
           >
             Salvar horários no médico
           </button>
+
 
           <button type="button" onClick={handleClear} className="btn clear">Limpar</button>
         </div>

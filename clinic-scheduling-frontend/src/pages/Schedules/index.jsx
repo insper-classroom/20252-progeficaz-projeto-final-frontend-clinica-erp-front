@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../api/axiosInstance";
 import ScheduleGenerator from "./ScheduleGenerator";
+import ScheduleList from "../../components/ScheduleList";
+
 import "./index.css"; 
 
 export default function Schedules() {
@@ -72,16 +74,9 @@ export default function Schedules() {
         <select
           value={selectedDoctorId}
           onChange={(e) => setSelectedDoctorId(e.target.value)}
-          style={{
-            padding: "10px 12px",
-            borderRadius: 8,
-            width: 420,
-            maxWidth: "100%",
-            border: "1px solid rgba(255,255,255,0.04)",
-            background: "transparent",
-            color: "var(--text)",
-          }}
+          className="form-select"
         >
+
           <option value="">— selecione —</option>
           {doctors.map((d) => (
             <option key={d._id} value={d._id}>
@@ -94,7 +89,13 @@ export default function Schedules() {
 
       <div className="generator-card card">
         {/* O próprio ScheduleGenerator mantém seus controles e botões de gerar/limpar */}
-        <ScheduleGenerator onGenerate={setPreviewHorarios} onClear={() => handleClearPreview(previewHorarios)} />
+        <ScheduleGenerator
+          onGenerate={setPreviewHorarios}
+          onSaveClick={() => handleSaveHorarios(previewHorarios)}
+          onClear={handleClearPreview}
+          saveDisabled={!previewHorarios || Object.keys(previewHorarios).length === 0}
+        />
+
 
         {/* mantemos apenas o botão salvar centralizado */}
         
@@ -102,7 +103,8 @@ export default function Schedules() {
 
       <section style={{ marginTop: 20 }}>
         <h2 className="section-title">Preview Horários gerados</h2>
-        <pre className="preview-box">{previewHorarios ? JSON.stringify(previewHorarios, null, 2) : "Nenhum horário gerado"}</pre>
+        <ScheduleList horarios={previewHorarios} />
+
       </section>
     </div>
   );

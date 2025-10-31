@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../api/axiosInstance";
 import DoctorForm from "./DoctorForm";
+import ScheduleList from "../../components/ScheduleList";
 import "./index.css";
+
 
 export default function DoctorsPage() {
   const [doctors, setDoctors] = useState([]); // garante array
@@ -136,11 +138,8 @@ export default function DoctorsPage() {
             </div>
 
             <h4 style={{ marginTop: 6 }}>Horários (objeto)</h4>
-            <pre className="preview-box">
-              {selectedDoctor.horarios
-                ? JSON.stringify(selectedDoctor.horarios, null, 2)
-                : "Nenhum horário cadastrado"}
-            </pre>
+            <ScheduleList horarios={selectedDoctor.horarios} />
+
           </div>
         )}
       </section>
