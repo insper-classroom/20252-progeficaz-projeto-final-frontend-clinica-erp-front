@@ -1,8 +1,9 @@
 // src/main.jsx
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import App from "./App";
+import Dashboard from "./pages/Dashboard";
 import Doctors from "./pages/Doctors";
 import Schedules from "./pages/Schedules";
 import LandingPage from "./pages/LandingPage";
@@ -17,12 +18,15 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        {/* Redirect root to /home */}
+        <Route path="/" element={<Navigate to="/home" replace />} />
+        
         {/* Landing page as a standalone route (no Sidebar/App wrapper) */}
         <Route path="/home" element={<LandingPage />} />
 
         {/* App and its protected routes (renders Sidebar, topbar, etc.) */}
-        <Route path="/*" element={<App />}>
-          <Route index element={<div>Home (placeholder)</div>} />
+        <Route path="/" element={<App />}>
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="doctors" element={<Doctors />} />
           <Route path="schedules" element={<Schedules />} />
         </Route>
