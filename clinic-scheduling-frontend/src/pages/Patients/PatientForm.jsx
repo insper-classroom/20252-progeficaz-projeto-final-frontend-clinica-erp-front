@@ -10,9 +10,21 @@ export default function PatientForm({ initial = {}, onSubmit}) {
         }
     })
 
-    function submit(data) {
-        onSubmit && onSubmit(data);
-        reset();
+    async function submit(data) {
+        if (!onSubmit) {
+            reset();
+            return;
+        }
+
+        try {
+            // Await the parent's onSubmit in case it performs async work (e.g. POST request)
+            await onSubmit(data);
+            // Only reset the form after successful submit
+            reset();
+        } catch (err) {
+            // Let the parent handle/log the error. We don't reset so the user can correct/try again.
+            console.error('Erro no submit do formulário:', err);
+        }
     }
 
     return (
@@ -60,8 +72,8 @@ export default function PatientForm({ initial = {}, onSubmit}) {
             </div>
 
             <div>
-                <button type="submit" className="btn btn-primary" aria-disabled={formState.isSubmitting}>
-                    {formState.isSubmitting ? 'Submitting...' : 'Submit'}
+                <button type="submit" className="btn btn-primary" disabled={formState.isSubmitting}>
+                    {formState.isSubmitting ? 'Enviando...' : 'Cadastrar paciente'}
                 </button>
             </div>
         </form>
