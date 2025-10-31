@@ -14,7 +14,7 @@ import {
 import "./index.css";
 
 const LINKS = [
-  { to: "/", label: "Dashboard", Icon: Home },
+  { to: "/dashboard", label: "Dashboard", Icon: Home },
   { to: "/doctors", label: "Médicos", Icon: User },
   { to: "/patients", label: "Pacientes", Icon: Users },
   { to: "/schedules", label: "Horários", Icon: Calendar },

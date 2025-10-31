@@ -3,6 +3,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import App from "./App";
+import Dashboard from "./pages/Dashboard";
 import Doctors from "./pages/Doctors";
 import Schedules from "./pages/Schedules";
 import LandingPage from "./pages/LandingPage";
@@ -25,6 +26,7 @@ root.render(
 
         {/* App and its protected routes (renders Sidebar, topbar, etc.) */}
         <Route path="/" element={<App />}>
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="doctors" element={<Doctors />} />
           <Route path="schedules" element={<Schedules />} />
         </Route>
