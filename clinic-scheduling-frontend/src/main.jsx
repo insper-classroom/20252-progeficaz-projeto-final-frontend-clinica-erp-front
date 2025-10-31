@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Doctors from "./pages/Doctors";
 import Schedules from "./pages/Schedules";
+import LandingPage from "./pages/LandingPage";
 import "./index.css";
 
 // Usaremos o backend real — removemos MSW/mocks.
@@ -16,6 +17,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        {/* Landing page as a standalone route (no Sidebar/App wrapper) */}
+        <Route path="/home" element={<LandingPage />} />
+
+        {/* App and its protected routes (renders Sidebar, topbar, etc.) */}
         <Route path="/*" element={<App />}>
           <Route index element={<div>Home (placeholder)</div>} />
           <Route path="doctors" element={<Doctors />} />
