@@ -3,7 +3,6 @@
   /* force the landing to cover the full viewport */
   width: 100vw;
   min-height: 100vh;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   background: #0a0a0a;
@@ -124,6 +123,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 4rem 2rem;
+  
 }
 
 .features-grid {
