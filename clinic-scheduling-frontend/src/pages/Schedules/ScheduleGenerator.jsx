@@ -54,6 +54,7 @@ export default function ScheduleGenerator({ onGenerate, onSaveClick, saveDisable
       <h3 style={{ textAlign: "center", marginBottom: 8 }}>Gerar horários por expediente</h3>
 
       <form onSubmit={handleSubmit(onSubmit)} className="generator-form">
+        
         <div className="generator-grid">
           <label>
             Data início
@@ -105,6 +106,7 @@ export default function ScheduleGenerator({ onGenerate, onSaveClick, saveDisable
 
         <div className="generator-actions">
           <button type="submit" className="btn generate">Gerar horários</button>
+          
 
           <button
             type="button"
