@@ -1,0 +1,48 @@
+/* src/components/AppBar/index.css */
+
+.appbar-root{
+  position: sticky;      /* important: fica preso ao topo do main sem overlay do sidebar */
+  top: 0;
+  z-index: 40;           /* suficientemente acima do conteúdo, abaixo da sidebar (sidebar pode ter z-index:50) */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  padding: 10px 20px;
+  background: linear-gradient(180deg, rgba(20,20,20,0.85), rgba(0,0,0,0.6));
+  border-radius: 12px;
+  margin-bottom: 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+
+/* left group */
+.appbar-left { display:flex; gap:12px; align-items:center; }
+.appbar-hamburger {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+}
+.appbar-title .appbar-main-title { font-weight:700; font-size:1.05rem; }
+.appbar-title .appbar-subtitle { font-size:0.85rem; color:var(--muted); }
+
+/* right group */
+.appbar-right { display:flex; gap:12px; align-items:center; }
+.appbar-user { display:flex; gap:8px; align-items:center; color:var(--text); }
+.appbar-user-initial {
+  width:34px; height:34px; border-radius:999px;
+  display:inline-flex; align-items:center; justify-content:center;
+  background: linear-gradient(180deg,var(--accent),var(--accent-2));
+  color:#fff; font-weight:700;
+}
+.appbar-logout {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding:8px 10px;
+  border-radius:10px;
+  color:var(--text);
+  cursor:pointer;
+}

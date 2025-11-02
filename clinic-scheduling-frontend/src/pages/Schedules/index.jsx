@@ -69,7 +69,7 @@ export default function Schedules() {
 
   return (
     <div className="schedules-root">
-      <h1> Horários — gerar e vincular </h1>
+      
 
       <div className="card" style={{ marginBottom: 18 }}>
         <label style={{ display: "block", marginBottom: 8, color: "var(--muted)" }}>

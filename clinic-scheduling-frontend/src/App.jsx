@@ -1,7 +1,7 @@
-// src/App.jsx
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
+import AppBar from "./components/Appbar"; // ✅ novo import
 import "./App.css";
 
 export default function App() {
@@ -13,7 +13,11 @@ export default function App() {
     }
   });
 
-  const sidebarWidth = collapsed ? 92 : 300; // espaço total da sidebar + margem visual
+  const sidebarWidth = collapsed ? 92 : 300;
+
+  // exemplo temporário de usuário e clínica logada
+  const clinic = { name: "Clínica Peficaz" };
+  const user = { name: "Administrador" };
 
   return (
     <div className="app-root">
@@ -26,9 +30,16 @@ export default function App() {
           transition: "margin-left .22s ease",
         }}
       >
-        <header className="app-topbar">
-          <div>AppBar (placeholder)</div>
-        </header>
+        {/* substitui o placeholder antigo */}
+        <AppBar
+          title="Painel Administrativo"
+          clinic={clinic}
+          user={user}
+          onLogout={() => {
+            console.log("Logout executado");
+            // implementar: limpar token e redirecionar para login
+          }}
+        />
 
         <section className="app-content">
           <Outlet />
