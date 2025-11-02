@@ -45,9 +45,13 @@ export default function Schedules() {
 
     setSaving(true);
     try {
-      await axios.put(`/medicos/${selectedDoctor._id}`, horarios);
+      await axios.post(`/medicos/${selectedDoctor._id}/horarios`, horarios);
       setDoctors((prev) =>
-        prev.map((d) => (String(d._id) === String(selectedDoctor._id) ? { ...d, horarios } : d))
+        prev.map((d) =>
+          String(d._id) === String(selectedDoctor._id)
+            ? { ...d, horarios: { ...(d.horarios || {}), ...horarios } }
+            : d
+        )
       );
       setPreviewHorarios(horarios);
       window.alert("Horários salvos com sucesso.");

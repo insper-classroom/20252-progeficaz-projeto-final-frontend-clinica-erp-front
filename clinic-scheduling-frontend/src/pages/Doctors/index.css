@@ -271,3 +271,17 @@ input:focus, select:focus {
   color: #9ff0d8;
   font-size: 12px;
 }
+/* botões ícone sutis */
+.icon-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text);
+}
+.icon-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
+
+/* adaptações da schedule-list já adicionadas antes */
+.slot { min-width: 140px; }
