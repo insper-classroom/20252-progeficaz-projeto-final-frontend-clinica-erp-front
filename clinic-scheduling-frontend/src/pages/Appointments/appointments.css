@@ -14,7 +14,66 @@
 
 .appointment-form label { display:block; margin-bottom:12px; color:var(--muted); }
 .appointment-form select, .appointment-form input { width:100%; padding:10px; border-radius:8px; background:var(--card); border:1px solid rgba(255,255,255,0.03); color:var(--text); }
-.actions-row { display:flex; gap:12px; margin-top:12px; }
+
+/* DROPDOWN do paciente */
+.patient-dropdown {
+  position: absolute;
+  z-index: 40;
+  left: 0;
+  right: 0;
+  max-height: 260px;
+  overflow: auto;
+  margin-top: 8px;
+  border-radius: 8px;
+  background: rgba(10,10,10,0.95);
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  list-style: none;
+  padding: 6px;
+}
+.patient-dropdown-item {
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.patient-dropdown-item:hover { background: rgba(255,255,255,0.02); }
+.patient-dropdown-item.empty { padding: 10px; color: var(--muted); cursor: default; }
+
+/* AÇÃO: botões alinhados e espaçados proporcionalmente */
+/* aumentei gap e forcei tamanhos mínimos para melhorar separação e proporção */
+.actions-row {
+  display:flex;
+  gap:20px;               /* mais espaço entre botões */
+  margin-top:18px;
+  align-items:center;
+}
+
+/* ajustes específicos para os botões deste formulário */
+.appointment-actions-adjusted .btn.primary {
+  padding: 12px 26px;
+  min-width: 200px;       /* maior largura para destaque */
+  border-radius: 12px;
+  background: linear-gradient(180deg,#0fb387,#0aa57f);
+  border: none;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(11,179,142,0.12);
+}
+
+/* Botão limpar visualmente menor e com margem à esquerda controlada */
+.appointment-actions_adjusted .btn.ghost,
+.appointment-actions-adjusted .btn.ghost {
+  padding: 12px 18px;
+  min-width: 120px;
+  border-radius: 12px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* fallback: se não for .appointment-actions_adjusted, garantir estilos base */
 .appointments-root .btn {
   padding:12px 18px;
   border-radius:12px;
@@ -113,6 +172,9 @@
   .appointments-grid { grid-template-columns: 1fr; }
   .appointments-form-card { width: 100%; }
   .appointments-list-controls { gap: 10px; }
+  .actions-row { gap: 12px; flex-wrap: wrap; }
+  .appointment-actions-adjusted .btn.primary { min-width: 48%; }
+  .appointment-actions-adjusted .btn.ghost { min-width: 48%; }
 }
 
 /* pequenas classes utilitárias para título da seção direita */
