@@ -64,7 +64,7 @@ export default function PatientForm({ initial = {}, onSubmit}) {
                     Idade
                     <input 
                         {...register('idade', { required: true})} 
-                        type="number" 
+                        type="text" 
                         placeholder="Idade" 
                         aria-label="idade" 
                     />

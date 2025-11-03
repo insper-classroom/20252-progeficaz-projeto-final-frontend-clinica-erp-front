@@ -1,0 +1,35 @@
+/* PatientQuery styles */
+.patient-item {
+	padding: 10px;
+	border-radius: 8px;
+	margin-bottom: 8px;
+	border: 1px solid rgba(255,255,255,0.03);
+	background: rgba(255,255,255,0.01);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.patient-main {
+	display: flex;
+	flex-direction: column;
+}
+
+.patient-item-actions { display: flex; gap: 8px; }
+
+.delete-btn {
+	background: transparent;
+	color: crimson;
+	border: 1px solid rgba(255,0,0,0.12);
+	padding: 6px 8px;
+	border-radius: 6px;
+	font-size: 13px;
+	min-width: 64px;
+	height: 32px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.delete-btn:hover { transform: translateY(-1px); }
+

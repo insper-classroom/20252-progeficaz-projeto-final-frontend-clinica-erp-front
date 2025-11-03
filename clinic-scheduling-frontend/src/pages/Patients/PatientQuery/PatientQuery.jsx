@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../../api/axiosInstance";
+import "./PatientQuery.css";
 
 export default function PatientQuery() {
     const [patients, setPatients] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [query, setQuery] = useState('');
 
     async function loadPatients() {
         setLoading(true);
@@ -23,6 +25,17 @@ export default function PatientQuery() {
         }
     }
 
+    async function deletePatient(id) {
+        try {
+            const resp = await axios.delete(`/pacientes/${id}`);
+            window.alert('Paciente deletado com sucesso.');
+            loadPatients();
+        } catch (err) {
+            console.error("Erro ao deletar paciente:", err);
+            window.alert('Erro ao deletar paciente.');
+        }
+    }
+
     useEffect(() => {
         // carrega automaticamente ao montar
         loadPatients();
@@ -32,9 +45,17 @@ export default function PatientQuery() {
         <div className="patient-query">
             <h2>Consultar pacientes</h2>
 
-            <div style={{ marginBottom: 12 }}>
+            <div style={{ marginBottom: 12, display: 'flex', gap: 8, alignItems: 'center' }}>
+                <input
+                    type="text"
+                    placeholder="Buscar por nome..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    style={{ padding: 8, borderRadius: 6, border: '1px solid rgba(255,255,255,0.06)', flex: 1 }}
+                />
+
                 <button className="btn" onClick={loadPatients} disabled={loading}>
-                    {loading ? 'Carregando...' : 'Recarregar pacientes'}
+                    {loading ? 'Carregando...' : 'Recarregar'}
                 </button>
             </div>
 
@@ -48,16 +69,50 @@ export default function PatientQuery() {
                 <div style={{ color: 'var(--muted)' }}>Nenhum paciente encontrado.</div>
             )}
 
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {patients.map((p) => (
-                    <li key={p._id ?? p.cpf ?? Math.random()} style={{ padding: 10, borderRadius: 8, marginBottom: 8, border: '1px solid rgba(255,255,255,0.03)' }}>
-                        <strong style={{ display: 'block' }}>{p.nome || p.name || '—'}</strong>
-                        <div style={{ fontSize: 13, color: 'var(--muted)' }}>
-                            CPF: {p.cpf || '—'} — Celular: {p.celular || '—'} — Idade: {p.idade ?? p.age ?? '—'}
-                        </div>
-                    </li>
-                ))}
-            </ul>
+            {/* filtro local por nome */}
+            {patients.length > 0 && (
+                (() => {
+                    const filtered = patients.filter((p) => {
+                        const name = (p.nome || p.name || '').toString().toLowerCase();
+                        return name.includes(query.toLowerCase());
+                    });
+
+                    if (!loading && filtered.length === 0) {
+                        return <div style={{ color: 'var(--muted)' }}>Nenhum paciente corresponde à busca.</div>;
+                    }
+
+                    return (
+                        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                            {filtered.map((p) => (
+                                        <li key={p._id ?? p.cpf ?? Math.random()} className="patient-item">
+                                            <div className="patient-main">
+                                                <strong className="patient-name">{p.nome || p.name || '—'}</strong>
+                                                <div className="patient-meta">CPF: {p.cpf || '—'} — Celular: {p.celular || '—'} — Idade: {p.idade ?? p.age ?? '—'}</div>
+                                            </div>
+
+                                            <div className="patient-item-actions">
+                                                <button
+                                                    className="btn ghost delete-btn"
+                                                    onClick={() => {
+                                                        const id = p._id || p.id;
+                                                        if (!id) {
+                                                            window.alert('ID do paciente não disponível.');
+                                                            return;
+                                                        }
+                                                        if (window.confirm(`Confirma exclusão do paciente ${p.nome || p.name || id}?`)) {
+                                                            deletePatient(id);
+                                                        }
+                                                    }}
+                                                >
+                                                    🗑
+                                                </button>
+                                            </div>
+                                        </li>
+                                    ))}
+                        </ul>
+                    );
+                })()
+            )}
         </div>
     );
 }
