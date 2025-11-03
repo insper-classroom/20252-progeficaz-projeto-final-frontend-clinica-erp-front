@@ -1,16 +1,46 @@
-# React + Vite
+# Frontend - Sistema de Gerenciamento de Clínica
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface web desenvolvida em React + Vite para gerenciamento de clínicas médicas.
 
-Currently, two official plugins are available:
+## Tecnologias
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 18 + Vite
+- React Router DOM
+- Axios
+- React Hook Form
+- date-fns
 
-## React Compiler
+## Instalação e Execução
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+Acesse em: `http://localhost:5173`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Importante:** O backend precisa estar rodando em `http://localhost:5000`
+
+## Estrutura
+
+```
+src/
+├── api/              # Configuração Axios
+├── components/       # Componentes reutilizáveis
+├── pages/           # Páginas da aplicação
+└── utils/           # Utilitários (gerador de horários)
+```
+
+## Funcionalidades
+
+- **Landing Page** (`/home`): Página inicial com cadastro e login
+- **Médicos** (`/doctors`): Cadastro e listagem de médicos
+- **Horários** (`/schedules`): Geração automática de horários por expediente
+
+## Scripts
+
+```bash
+npm run dev      # Desenvolvimento
+npm run build    # Build para produção
+npm run preview  # Preview do build
+```
