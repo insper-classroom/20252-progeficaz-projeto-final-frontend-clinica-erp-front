@@ -33,3 +33,31 @@
 
 .delete-btn:hover { transform: translateY(-1px); }
 
+/* Edit button: match size/visual of delete button */
+.edit-btn {
+	background: transparent;
+	color: var(--text);
+	border: 1px solid rgba(255,255,255,0.06);
+	padding: 6px 8px;
+	border-radius: 6px;
+	font-size: 13px;
+	min-width: 64px;
+	height: 32px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+.edit-btn:hover { transform: translateY(-1px); }
+
+/* Ensure action buttons inside patient items have consistent compact sizing */
+.patient-item-actions .btn {
+	padding: 6px 8px;
+	border-radius: 6px;
+	font-size: 13px;
+	min-width: 64px;
+	height: 32px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
