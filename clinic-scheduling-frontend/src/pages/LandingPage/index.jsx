@@ -1,5 +1,6 @@
 import "./index.css"
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
   const [showRegistration, setShowRegistration] = useState(false);
@@ -366,23 +367,58 @@ function RegistrationModal({ onClose }) {
 }
 
 function LoginModal({ onClose }) {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   })
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+    // Limpa erro quando o usuário começa a digitar
+    if (error) setError("")
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log("[v0] Login data:", formData)
-    // Handle login submission here
-    alert("Login successful!")
-    onClose()
+    setLoading(true)
+    setError("")
+
+    try {
+      const apiUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"
+      const response = await fetch(`${apiUrl}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.erro || "Erro ao fazer login")
+      }
+
+      // Salva o token no localStorage
+      localStorage.setItem("auth_token", data.token)
+      localStorage.setItem("username", data.username)
+
+      // Fecha o modal e redireciona para dashboard
+      onClose()
+      navigate("/dashboard")
+    } catch (err) {
+      setError(err.message || "Erro ao fazer login. Verifique suas credenciais.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -397,16 +433,30 @@ function LoginModal({ onClose }) {
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-section">
+            {error && (
+              <div style={{
+                padding: "0.75rem",
+                marginBottom: "1rem",
+                backgroundColor: "#fee2e2",
+                color: "#dc2626",
+                borderRadius: "6px",
+                fontSize: "0.875rem"
+              }}>
+                {error}
+              </div>
+            )}
+
             <div className="form-group">
-              <label className="form-label required">Email da clínica</label>
+              <label className="form-label required">Usuário</label>
               <input
-                type="email"
-                name="email"
-                value={formData.email}
+                type="text"
+                name="username"
+                value={formData.username}
                 onChange={handleChange}
                 className="form-input"
-                placeholder="contato@clinica.com"
+                placeholder="admin"
                 required
+                disabled={loading}
               />
             </div>
 
@@ -421,6 +471,7 @@ function LoginModal({ onClose }) {
                   className="form-input"
                   placeholder="Digite sua senha"
                   required
+                  disabled={loading}
                 />
                 <button type="button" className="password-toggle" onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? "👁️" : "👁️‍🗨️"}
@@ -440,8 +491,12 @@ function LoginModal({ onClose }) {
           </div>
 
           <div className="form-actions">
-            <button type="submit" className="btn btn-primary btn-full">
-              Login
+            <button 
+              type="submit" 
+              className="btn btn-primary btn-full"
+              disabled={loading}
+            >
+              {loading ? "Entrando..." : "Login"}
             </button>
           </div>
 
