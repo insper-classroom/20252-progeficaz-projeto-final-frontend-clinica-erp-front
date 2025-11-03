@@ -19,7 +19,7 @@ const LINKS = [
   { to: "/patients", label: "Pacientes", Icon: Users },
   { to: "/schedules", label: "Horários", Icon: Calendar },
   { to: "/appointments", label: "Consultas", Icon: ClipboardList },
-  { to: "/chatbot", label: "Chatbot", Icon: Bot },
+
 ];
 
 export default function Sidebar({ collapsed = false, setCollapsed = () => {} }) {
