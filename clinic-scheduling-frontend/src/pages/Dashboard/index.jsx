@@ -5,7 +5,7 @@ import StatCard from '../../components/cards/StatCard';
 import ChartCard from '../../components/cards/ChartCard';
 import './index.css';
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
@@ -253,46 +253,10 @@ export default function Dashboard() {
                   </div>
                 </div>
               )}
+            
               
-              <div className="quick-stat-item">
-                <div className="quick-stat-label">Consultas Ocupadas (Mês)</div>
-                <div className="quick-stat-value">
-                  {loading ? '...' : quickStats.consultasOcupadasMes}
-                </div>
-                <div className="quick-stat-subtitle">
-                  {loading ? '' : `${new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}`}
-                </div>
-                <div className="quick-stat-bar">
-                  <div 
-                    className="quick-stat-progress" 
-                    style={{ 
-                      width: quickStats.totalConsultas > 0 
-                        ? `${(quickStats.consultasOcupadasMes / quickStats.totalConsultas) * 100}%`
-                        : '0%',
-                      backgroundColor: '#1de9b6' 
-                    }}
-                  ></div>
-                </div>
-              </div>
-              
-              <div className="quick-stat-item">
-                <div className="quick-stat-label">Consultas Ocupadas (7 dias)</div>
-                <div className="quick-stat-value">{loading ? '...' : quickStats.consultasOcupadas7Dias}</div>
-                <div className="quick-stat-subtitle">
-                  {loading ? '' : 'Últimos 7 dias'}
-                </div>
-                <div className="quick-stat-bar">
-                  <div 
-                    className="quick-stat-progress" 
-                    style={{ 
-                      width: quickStats.totalConsultas > 0 
-                        ? `${(quickStats.consultasOcupadas7Dias / quickStats.totalConsultas) * 100}%`
-                        : '0%',
-                      backgroundColor: '#4680FF' 
-                    }}
-                  ></div>
-                </div>
-              </div>
+             
+            
             </div>
           </ChartCard>
         </div>
