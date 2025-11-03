@@ -45,7 +45,7 @@ export default function LandingPage() {
             <div className="feature-icon">👥</div>
             <h3 className="feature-title">Doctor management</h3>
             <p className="feature-description">
-              Com poucos clique administre os dados dos seus médicos de forma simples e eficiente.
+              Com poucos cliques administre os dados dos seus médicos de forma simples e eficiente.
             </p>
           </div>
         </div>

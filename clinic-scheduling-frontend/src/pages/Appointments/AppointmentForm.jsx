@@ -16,6 +16,10 @@ export default function AppointmentForm({ patients = [], doctors = [], selectedD
   const [hora, setHora] = useState("");
   const [detalhes, setDetalhes] = useState("");
 
+  // search state for patients
+  const [patientQuery, setPatientQuery] = useState("");
+  const [showPatientDropdown, setShowPatientDropdown] = useState(false);
+
   // available horarios for selected doctor+date (object { "HH:mm": { status, paciente }})
   const availableHorarios = useMemo(() => {
     if (!selectedDoctorId || !selectedDate) return {};
@@ -36,13 +40,47 @@ export default function AppointmentForm({ patients = [], doctors = [], selectedD
     setHora("");
   }, [selectedDoctorId, selectedDate]);
 
+  // when selectedPatientId changes, reflect it on query input (for UX)
+  useEffect(() => {
+    const p = patients.find((x) => String(x._id) === String(selectedPatientId));
+    if (p) setPatientQuery(p.nome || p.name || "");
+  }, [selectedPatientId, patients]);
+
+  // filtered patients for dropdown (simple, client-side). Limit results for performance.
+  const filteredPatients = useMemo(() => {
+    const q = (patientQuery || "").trim().toLowerCase();
+    if (!q) return patients.slice(0, 30);
+    return patients.filter((p) => (p.nome || p.name || "").toLowerCase().includes(q)).slice(0, 30);
+  }, [patients, patientQuery]);
+
+  // Clear form helper
+  function clearFormLocal() {
+    setSelectedPatientId("");
+    setPatientQuery("");
+    setSelectedDoctorId("");
+    setHora("");
+    setDetalhes("");
+  }
+
   async function handleSubmit(e) {
     e && e.preventDefault();
     if (!onCreate) {
       window.alert("Handler de criação não fornecido.");
       return;
     }
-    // use the state variable names used here (selectedPatientId / selectedDoctorId)
+    if (!selectedPatientId) {
+      window.alert("Selecione um paciente.");
+      return;
+    }
+    if (!selectedDoctorId) {
+      window.alert("Selecione um médico.");
+      return;
+    }
+    if (!hora) {
+      window.alert("Selecione um horário.");
+      return;
+    }
+
     const success = await onCreate({
       patientId: selectedPatientId,
       doctorId: selectedDoctorId,
@@ -50,25 +88,60 @@ export default function AppointmentForm({ patients = [], doctors = [], selectedD
       hora,
       detalhes: detalhes ? { observacoes: detalhes } : {},
     });
+
     if (success) {
-      // limpa formulário
-      setSelectedPatientId("");
-      setSelectedDoctorId("");
-      setHora("");
-      setDetalhes("");
+      clearFormLocal();
     }
   }
 
+  function handleSelectPatient(p) {
+    setSelectedPatientId(p._id);
+    setPatientQuery(p.nome || p.name || "");
+    setShowPatientDropdown(false);
+  }
+
   return (
-    <form className="appointment-form" onSubmit={handleSubmit}>
+    <form className="appointment-form" onSubmit={handleSubmit} autoComplete="off">
       <label>
         Paciente
-        <select value={selectedPatientId} onChange={(e) => setSelectedPatientId(e.target.value)}>
-          <option value="">— selecione —</option>
-          {patients.map((p) => (
-            <option key={p._id} value={p._id}>{p.nome}</option>
-          ))}
-        </select>
+        <div style={{ position: "relative" }}>
+          <input
+            type="text"
+            value={patientQuery}
+            onChange={(e) => { setPatientQuery(e.target.value); setShowPatientDropdown(true); }}
+            onFocus={() => setShowPatientDropdown(true)}
+            onBlur={() => {
+              // pequeno delay para permitir clique em item do dropdown
+              setTimeout(() => setShowPatientDropdown(false), 150);
+            }}
+            placeholder="Pesquisar paciente por nome"
+            aria-label="Buscar paciente"
+          />
+
+          {showPatientDropdown && (
+            <ul className="patient-dropdown" role="listbox" aria-label="Resultados de pacientes">
+              {filteredPatients.length === 0 ? (
+                <li className="patient-dropdown-item empty">Nenhum paciente encontrado</li>
+              ) : (
+                filteredPatients.map((p) => {
+                  const id = p._id ?? p.id ?? p.cpf ?? Math.random();
+                  return (
+                    <li
+                      key={id}
+                      role="option"
+                      className="patient-dropdown-item"
+                      onMouseDown={(ev) => ev.preventDefault()} // evita blur antes do click
+                      onClick={() => handleSelectPatient(p)}
+                    >
+                      <div style={{ fontWeight: 700 }}>{p.nome || p.name}</div>
+                      <div style={{ fontSize: 12, color: "var(--muted)" }}>CPF: {p.cpf || "—"} · {p.celular || "—"}</div>
+                    </li>
+                  );
+                })
+              )}
+            </ul>
+          )}
+        </div>
       </label>
 
       <label>
@@ -101,11 +174,20 @@ export default function AppointmentForm({ patients = [], doctors = [], selectedD
         <input value={detalhes} onChange={(e) => setDetalhes(e.target.value)} placeholder="Ex.: Teleconsulta / observações" />
       </label>
 
-      <div className="actions-row">
-        <button type="submit" className="btn primary" disabled={loading || !selectedPatientId || !selectedDoctorId || !hora}>
-          Agendar consulta
+      <div className="actions-row appointment-actions-adjusted">
+        <button
+          type="submit"
+          className="btn primary"
+          disabled={loading || !selectedPatientId || !selectedDoctorId || !hora}
+        >
+          {loading ? "Enviando..." : "Agendar consulta"}
         </button>
-        <button type="button" className="btn" onClick={() => { setSelectedPatientId(""); setSelectedDoctorId(""); setHora(""); setDetalhes(""); }}>
+
+        <button
+          type="button"
+          className="btn ghost"
+          onClick={() => clearFormLocal()}
+        >
           Limpar
         </button>
       </div>
