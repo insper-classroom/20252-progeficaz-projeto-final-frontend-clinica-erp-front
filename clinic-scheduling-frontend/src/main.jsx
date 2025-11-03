@@ -6,6 +6,7 @@ import App from "./App";
 import Dashboard from "./pages/Dashboard";
 import Doctors from "./pages/Doctors";
 import Schedules from "./pages/Schedules";
+import Patients from "./pages/Patients";
 import LandingPage from "./pages/LandingPage";
 import AppointmentsPage from "./pages/Appointments";
 import "./index.css";
@@ -31,6 +32,7 @@ root.render(
           <Route path="doctors" element={<Doctors />} />
           <Route path="schedules" element={<Schedules />} />
           <Route path="appointments" element={<AppointmentsPage />} />
+          <Route path="patients" element={<Patients />} />
         </Route>
       </Routes>
     </BrowserRouter>
