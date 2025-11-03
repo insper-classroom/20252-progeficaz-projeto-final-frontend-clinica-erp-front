@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Users, Stethoscope, Calendar, CalendarCheck } from 'lucide-react';
-import axios from 'axios';
+import axios from '../../api/axiosInstance';
 import StatCard from '../../components/cards/StatCard';
 import ChartCard from '../../components/cards/ChartCard';
 import './index.css';
-
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
@@ -32,11 +30,11 @@ export default function Dashboard() {
         setLoading(true);
         
         // Buscar pacientes
-        const pacientesResponse = await axios.get(`${API_BASE_URL}/pacientes`);
+        const pacientesResponse = await axios.get('/pacientes');
         const pacientes = pacientesResponse.data.pacientes || [];
         
         // Buscar médicos
-        const medicosResponse = await axios.get(`${API_BASE_URL}/medicos`);
+        const medicosResponse = await axios.get('/medicos');
         const medicos = medicosResponse.data.medicos || [];
         
         // Calcular datas para comparação
