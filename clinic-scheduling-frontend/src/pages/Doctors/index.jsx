@@ -110,27 +110,44 @@ export default function DoctorsPage() {
   }
 
   // Remove um horário específico do médico selecionado (ou de um médico passado)
-  async function handleDeleteSlot(date, hora, medico = selectedDoctor) {
+   // Remove um horário específico do médico selecionado (ou de um médico passado)
+  async function handleDeleteSlot(date, hora, info, medico = selectedDoctor) {
     if (!medico) return window.alert("Nenhum médico selecionado.");
     if (!window.confirm(`Remover horário ${hora} em ${date}?`)) return;
 
     try {
       const id = medico._id;
-    
-      // ✅ Novo endpoint DELETE para horários individuais
+
+      // 1) remove o horário do médico (endpoint DELETE /medicos/:id/horarios { data, hora })
       await axios.delete(`/medicos/${id}/horarios`, {
         data: { data: date, hora: hora },
       });
-      
-      
+
+      // 2) se o horário estava vinculado a um paciente, remover a consulta do paciente
+      const pacienteId = info?.paciente;
+      if (pacienteId && pacienteId !== "ne") {
+        try {
+          await axios.delete(`/pacientes/${pacienteId}/consultas`, {
+            data: { data: date, hora: hora },
+          });
+        } catch (err) {
+          console.error("Falha ao remover consulta do paciente (após remover horário do médico):", err);
+          // não abortamos a operação — usuário será informado via console
+        }
+      }
+
+      // 3) atualizar estado local de doctors e selectedDoctor
       const newHorarios = { ...(medico.horarios || {}) };
       if (newHorarios[date]) {
         delete newHorarios[date][hora];
         if (Object.keys(newHorarios[date]).length === 0) delete newHorarios[date];
       }
-      // atualizar estado local de doctors e selectedDoctor
-      setDoctors((prev) => prev.map((m) => (String(m._id) === String(id) ? { ...m, horarios: newHorarios } : m)));
+
+      setDoctors((prev) =>
+        prev.map((m) => (String(m._id) === String(id) ? { ...m, horarios: newHorarios } : m))
+      );
       if (selectedDoctor?._id === id) setSelectedDoctor((s) => ({ ...s, horarios: newHorarios }));
+
       window.alert("Horário removido.");
     } catch (err) {
       console.error("Erro ao remover horário:", err);
@@ -138,22 +155,45 @@ export default function DoctorsPage() {
     }
   }
 
-  // Remove todos os horários de uma data
+  // Remove todos os horários de uma data (e as consultas dos pacientes vinculados)
   async function handleClearDate(date, medico = selectedDoctor) {
     if (!medico) return window.alert("Nenhum médico selecionado.");
     if (!window.confirm(`Remover todos os horários de ${date}?`)) return;
 
     try {
       const id = medico._id;
+
+      // Captura os pacientes vinculados a esse dia antes de apagar no médico
+      const times = (medico.horarios && medico.horarios[date]) ? medico.horarios[date] : {};
+      const entries = Object.entries(times); // [ [hora, info], ... ]
+
+      // 1) remove o dia inteiro no médico (DELETE /medicos/:id/horarios { data })
       await axios.delete(`/medicos/${id}/horarios`, {
-      data: { data: date },
+        data: { data: date },
       });
 
+      // 2) para cada horário/entry, se houver paciente vinculado, remover a consulta do paciente
+      for (const [hora, info] of entries) {
+        const pacienteId = info?.paciente;
+        if (pacienteId && pacienteId !== "ne") {
+          try {
+            // podemos chamar com hora específica para ser mais seguro
+            await axios.delete(`/pacientes/${pacienteId}/consultas`, {
+              data: { data: date, hora },
+            });
+          } catch (err) {
+            console.error(`Falha ao remover consulta do paciente ${pacienteId} para ${date} ${hora}:`, err);
+          }
+        }
+      }
+
+      // 3) atualizar estado local
       const newHorarios = { ...(medico.horarios || {}) };
       delete newHorarios[date];
-      
+
       setDoctors((prev) => prev.map((m) => (String(m._id) === String(id) ? { ...m, horarios: newHorarios } : m)));
       if (selectedDoctor?._id === id) setSelectedDoctor((s) => ({ ...s, horarios: newHorarios }));
+
       window.alert(`Horários de ${date} removidos com sucesso.`);
     } catch (err) {
       console.error("Erro ao limpar data:", err);
@@ -161,23 +201,53 @@ export default function DoctorsPage() {
     }
   }
 
-  // Remove todos os horários do médico
+  // Remove todos os horários do médico (percorre todas as datas e processa exclusões)
   async function handleClearAllHorarios(medico = selectedDoctor) {
     if (!medico) return window.alert("Nenhum médico selecionado.");
     if (!window.confirm(`Remover todos os horários do médico ${medico.nome || medico.name}?`)) return;
 
     try {
       const id = medico._id;
+      const allDates = Object.keys(medico.horarios || {});
+
+      // Para cada data: coletar entries, pedir delete no médico (data) e remover consultas dos pacientes
+      for (const date of allDates) {
+        const times = medico.horarios[date] || {};
+        const entries = Object.entries(times);
+
+        // delete data no médico
+        try {
+          await axios.delete(`/medicos/${id}/horarios`, { data: { data: date } });
+        } catch (err) {
+          console.error(`Falha ao remover horários do médico para ${date}:`, err);
+          // continuar com próximas datas
+        }
+
+        // apagar consultas dos pacientes vinculados a essa data
+        for (const [hora, info] of entries) {
+          const pacienteId = info?.paciente;
+          if (pacienteId && pacienteId !== "ne") {
+            try {
+              await axios.delete(`/pacientes/${pacienteId}/consultas`, { data: { data: date, hora } });
+            } catch (err) {
+              console.error(`Falha ao remover consulta do paciente ${pacienteId} (${date} ${hora}):`, err);
+            }
+          }
+        }
+      }
+
+      // estado local: vazio
       const newHorarios = {};
-      await axios.put(`/medicos/${id}`, newHorarios);
       setDoctors((prev) => prev.map((m) => (String(m._id) === String(id) ? { ...m, horarios: newHorarios } : m)));
       if (selectedDoctor?._id === id) setSelectedDoctor((s) => ({ ...s, horarios: newHorarios }));
+
       window.alert("Todos os horários removidos.");
     } catch (err) {
       console.error("Erro ao limpar todos os horários:", err);
       window.alert("Erro ao limpar todos os horários (veja console).");
     }
   }
+
 
   return (
     <div className="doctors-root">
@@ -265,7 +335,7 @@ export default function DoctorsPage() {
             <h4 style={{ marginTop: 6 }}>Horários (objeto)</h4>
             <ScheduleList
               horarios={selectedDoctor.horarios}
-              onDeleteSlot={(date, hora) => handleDeleteSlot(date, hora)}
+              onDeleteSlot={(date, hora, info) => handleDeleteSlot(date, hora, info)}
               onClearDate={(date) => handleClearDate(date)}
               onClearAll={() => handleClearAllHorarios()}
             />

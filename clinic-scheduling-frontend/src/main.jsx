@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Doctors from "./pages/Doctors";
 import Schedules from "./pages/Schedules";
 import LandingPage from "./pages/LandingPage";
+import AppointmentsPage from "./pages/Appointments";
 import "./index.css";
 
 // Usaremos o backend real — removemos MSW/mocks.
@@ -29,6 +30,7 @@ root.render(
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="doctors" element={<Doctors />} />
           <Route path="schedules" element={<Schedules />} />
+          <Route path="appointments" element={<AppointmentsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

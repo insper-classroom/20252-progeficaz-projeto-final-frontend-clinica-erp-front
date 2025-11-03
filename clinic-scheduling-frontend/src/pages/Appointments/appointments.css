@@ -1,0 +1,107 @@
+/* src/pages/Appointments/appointments.css */
+.appointments-root { padding: 8px 0; }
+
+/* GRID: aumenta espaço entre colunas e dá mais largura ao form */
+.appointments-grid {
+  display: grid;
+  grid-template-columns: 520px 1fr; /* form + lista */
+  gap: 48px;
+  align-items: start;
+}
+
+.appointments-form-card { padding: 20px; box-sizing: border-box; }
+.appointments-list-card { padding: 20px; box-sizing: border-box; min-height: 320px; }
+
+.appointment-form label { display:block; margin-bottom:12px; color:var(--muted); }
+.appointment-form select, .appointment-form input { width:100%; padding:10px; border-radius:8px; background:var(--card); border:1px solid rgba(255,255,255,0.03); color:var(--text); }
+.actions-row { display:flex; gap:12px; margin-top:12px; }
+.btn { padding:12px 18px; border-radius:12px; background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--text); cursor:pointer; }
+.btn.primary { background: linear-gradient(180deg,#0fb387,#0aa57f); border:none; color:white; font-weight:700; }
+
+/* list / items */
+.appointments-list .appt-items { list-style:none; padding:0; margin:0; }
+.appt-item { display:flex; justify-content:space-between; padding:12px 16px; border-radius:8px; margin-bottom:10px; background:rgba(255,255,255,0.02); align-items:flex-start; }
+.appt-item .time { font-weight:700; color:#0fb387; min-width:64px; }
+.appt-item .patient { color:var(--muted); }
+.empty { padding: 20px; color: var(--muted); }
+
+/* garantir largura consistente dos controles do formulário */
+.appointments-form-card {
+  padding: 20px;
+  width: 520px;              /* card fixo para uniformizar selects */
+  box-sizing: border-box;
+}
+
+/* todos os inputs e selects do formulário com mesma aparência/tamanho */
+.appointment-form select,
+.appointment-form input,
+.appointment-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.03);
+  color: var(--text);
+}
+
+/* estilização do item de consulta: acrescenta subtítulo (médico) e observação */
+.appt-item .left { display:flex; flex-direction:column; gap:4px; }
+.appt-item .patient { font-weight:600; color:var(--text); }
+.appt-item .doctor { color:var(--muted); font-size:0.95rem; margin-top:2px; }
+.appt-item .obs { color: var(--muted-2); font-size:0.9rem; margin-top:6px; }
+
+/* CONTROLS (nova área de controles no painel direito) */
+.appointments-list-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+/* date picker (mantém estilo) */
+.list-date {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: var(--card);
+  color: var(--text);
+  min-width: 140px;
+  box-sizing: border-box;
+}
+
+/* search ocupa o restante */
+.appointments-search {
+  flex: 1 1 360px;
+  min-width: 220px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: var(--card);
+  color: var(--text);
+  box-sizing: border-box;
+}
+
+/* grupo direito com botões (Limpar + Recarregar) */
+.appointments-controls-right {
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+/* deixamos os botões um pouco menores aqui */
+.appointments-controls-right .btn {
+  padding: 10px 16px;
+  border-radius: 12px;
+}
+
+/* garantir responsividade mínima: quando tela pequena quebra colunas */
+@media (max-width: 980px) {
+  .appointments-grid { grid-template-columns: 1fr; }
+  .appointments-form-card { width: 100%; }
+  .appointments-list-controls { gap: 10px; }
+}
+
+/* pequenas classes utilitárias para título da seção direita */
+.section-title-right { margin-bottom: 8px; display:block; color: var(--text); font-weight:700; }
