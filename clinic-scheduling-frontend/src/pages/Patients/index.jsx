@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from '../../api/axiosInstance';
-import PatientForm from './PatientForm';
+import PatientForm from './PatientForm/PatientForm';
+import PatientQuery from './PatientQuery/PatientQuery';
 import "./index.css"
 
 export default function Patients() {
@@ -26,7 +27,6 @@ export default function Patients() {
 
       window.alert('Paciente criado com sucesso.');
     } catch (err) {
-      console.error('Erro ao criar paciente:', err);
       const message = err?.erro || err?.message || 'Erro ao criar paciente';
       window.alert(message);
     }
@@ -34,8 +34,9 @@ export default function Patients() {
   
   return (
     <div>
-      <h1>Pacientes</h1>
+      <h1>Pacientes - Formulário de cadastro</h1>
       <PatientForm onSubmit={handleSavePatient} />
+      <PatientQuery />
     </div>
   );
 }
