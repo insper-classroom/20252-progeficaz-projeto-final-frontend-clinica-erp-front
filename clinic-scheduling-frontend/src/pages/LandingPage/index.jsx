@@ -1,5 +1,3 @@
-"use client"
-
 import "./index.css"
 import { useState } from "react"
 
@@ -8,6 +6,7 @@ function App() {
   const [showLogin, setShowLogin] = useState(false)
 
   console.log("[v0] Modal states - showLogin:", showLogin, "showRegistration:", showRegistration)
+}
 
   return (
     <div className="landing-page">
@@ -633,7 +632,7 @@ function App() {
       )}
     </div>
   )
-}
+
 
 function RegistrationModal({ onClose, onSwitchToLogin }) {
   const [step, setStep] = useState(1)
@@ -940,12 +939,8 @@ function RegistrationModal({ onClose, onSwitchToLogin }) {
   )
 }
 
-<<<<<<< HEAD
 function LoginModal({ onClose }) {
   const navigate = useNavigate()
-=======
-function LoginModal({ onClose, onSwitchToRegister }) {
->>>>>>> 279016a (melhorria da home)
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -963,7 +958,6 @@ function LoginModal({ onClose, onSwitchToRegister }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-<<<<<<< HEAD
     setLoading(true)
     setError("")
 
@@ -998,11 +992,6 @@ function LoginModal({ onClose, onSwitchToRegister }) {
     } finally {
       setLoading(false)
     }
-=======
-    console.log("[v0] Login data:", formData)
-    alert("Login realizado com sucesso!")
-    onClose()
->>>>>>> 279016a (melhorria da home)
   }
 
   return (
@@ -1075,17 +1064,12 @@ function LoginModal({ onClose, onSwitchToRegister }) {
           </div>
 
           <div className="form-actions">
-<<<<<<< HEAD
             <button 
               type="submit" 
               className="btn btn-primary btn-full"
               disabled={loading}
             >
               {loading ? "Entrando..." : "Login"}
-=======
-            <button type="submit" className="btn btn-primary btn-full">
-              Entrar
->>>>>>> 279016a (melhorria da home)
             </button>
           </div>
 
