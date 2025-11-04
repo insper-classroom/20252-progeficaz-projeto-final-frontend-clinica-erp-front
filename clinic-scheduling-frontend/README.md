@@ -2,6 +2,8 @@
 
 Interface web desenvolvida em React + Vite para gerenciamento de clínicas médicas.
 
+**Deploy** 52.90.99.174 ( site - frontend)
+
 ## Tecnologias
 
 - React 18 + Vite
