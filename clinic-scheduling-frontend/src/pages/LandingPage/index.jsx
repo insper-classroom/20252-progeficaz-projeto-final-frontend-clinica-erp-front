@@ -1,12 +1,12 @@
 import "./index.css"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 function App() {
   const [showRegistration, setShowRegistration] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
 
   console.log("[v0] Modal states - showLogin:", showLogin, "showRegistration:", showRegistration)
-}
 
   return (
     <div className="landing-page">
@@ -632,7 +632,7 @@ function App() {
       )}
     </div>
   )
-
+}
 
 function RegistrationModal({ onClose, onSwitchToLogin }) {
   const [step, setStep] = useState(1)
